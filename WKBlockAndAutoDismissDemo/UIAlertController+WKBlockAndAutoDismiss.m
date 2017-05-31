@@ -51,10 +51,10 @@ popoverPresentationControllerBlock:(WKPopoverPresentationControllerBlock)popover
         [alert addAction:otherAction];
     }];
     
+    __weak typeof(alert)weakAlert = alert;
     if(destructiveButtonTitle){
-        
         UIAlertAction *destructiveAction = [UIAlertAction actionWithTitle:destructiveButtonTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            NSInteger index = [alert.actions indexOfObject:action];
+            NSInteger index = [weakAlert.actions indexOfObject:action];
             SafeCallTapAction(tapAction, index);
         }];
         [alert addAction:destructiveAction];
@@ -63,7 +63,7 @@ popoverPresentationControllerBlock:(WKPopoverPresentationControllerBlock)popover
     if(cancelButtonTitle){
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             NSLog(@"cancel");
-            NSInteger index = [alert.actions indexOfObject:action];
+            NSInteger index = [weakAlert.actions indexOfObject:action];
             SafeCallTapAction(tapAction, index)
         }];
         [alert addAction:cancelAction];
